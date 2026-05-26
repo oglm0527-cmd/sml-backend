@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: sml-mqtt-backend
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn app:app --workers 1 --bind 0.0.0.0:$PORT --timeout 120"
+    healthCheckPath: /health
+    envVars:
+      - key: HIVEMQ_PORT
+        value: "8883"
+      - key: MODEL_PATH
+        value: "model.pkl"
+      - key: HIVEMQ_HOST
+        sync: false
+      - key: HIVEMQ_USERNAME
+        sync: false
+      - key: HIVEMQ_PASSWORD
+        sync: false
+      - key: FIREBASE_SERVICE_ACCOUNT_JSON
+        sync: false

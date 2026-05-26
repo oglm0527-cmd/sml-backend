@@ -1,0 +1,30 @@
+{
+  "features": [
+    "heartRateAvg",
+    "respiratoryRateAvg",
+    "soundLevelAvg",
+    "snoreDetected",
+    "totalEvents",
+    "sleepHours",
+    "iah",
+    "bmi"
+  ],
+  "version": "1.0.0",
+  "dataset_type": "synthetic",
+  "disclaimer": "Prueba de concepto académica. No validado clínicamente.",
+  "metrics": {
+    "accuracy_test": 0.97,
+    "f1_weighted_test": 0.9699,
+    "cv_accuracy_mean": 0.9708
+  },
+  "feature_importance": {
+    "iah": 0.2781,
+    "totalEvents": 0.2363,
+    "bmi": 0.1777,
+    "soundLevelAvg": 0.1233,
+    "snoreDetected": 0.092,
+    "heartRateAvg": 0.0432,
+    "respiratoryRateAvg": 0.0281,
+    "sleepHours": 0.0212
+  }
+}
