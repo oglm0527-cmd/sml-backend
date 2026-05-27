@@ -81,8 +81,8 @@ class MQTTClient:
         else:
             logger.error(f"Error guardando sesión uid={uid}")
 
-        def _procesar_muestra(self, uid: str, datos: dict):
-         logger.info(
+    def _procesar_muestra(self, uid: str, datos: dict):
+        logger.info(
             f"[sample] uid={uid} "
             f"session={datos.get('sessionId')} "
             f"HR={datos.get('heartRate')} "
