@@ -64,7 +64,7 @@ class MQTTClient:
         if tipo == "night-summary":
             self._procesar_resumen(uid, datos)
         elif tipo == "samples":
-            logger.debug(f"[sample] uid={uid} HR={datos.get('heartRate')} BR={datos.get('breathRate')}")
+            self._procesar_muestra(uid, datos)
         elif tipo == "status":
             logger.info(f"[status] uid={uid} | {datos}")
 
@@ -80,6 +80,26 @@ class MQTTClient:
             logger.info(f"✓ Sesión guardada: {session_id}")
         else:
             logger.error(f"Error guardando sesión uid={uid}")
+
+        def _procesar_muestra(self, uid: str, datos: dict):
+         logger.info(
+            f"[sample] uid={uid} "
+            f"session={datos.get('sessionId')} "
+            f"HR={datos.get('heartRate')} "
+            f"BR={datos.get('breathRate')} "
+            f"Sound={datos.get('soundLevel')}"
+        )
+
+        if not self.db.uid_existe(uid):
+            logger.error(f"uid={uid} no existe en Firestore. No se guarda muestra.")
+            return
+
+        ok = self.db.guardar_muestra(uid, datos)
+
+        if ok:
+            logger.info(f"✓ Muestra procesada uid={uid}")
+        else:
+            logger.error(f"Error procesando muestra uid={uid}")
 
     def iniciar(self):
         logger.info(f"Conectando a {self.host}:{self.port}...")

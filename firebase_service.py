@@ -50,6 +50,40 @@ class FirebaseService:
         except Exception as e:
             logger.error(f"Error verificando uid {uid}: {e}")
             return False
+        
+    def guardar_muestra(self, uid: str, datos: dict):
+        try:
+            session_id = datos.get("sessionId")
+            if not session_id:
+                fecha = datetime.now(timezone.utc).date().isoformat()
+                session_id = f"session_{fecha}"
+
+            sample_data = {
+                "timestamp": datos.get("timestamp", datetime.now(timezone.utc).isoformat()),
+                "heartRate": float(datos.get("heartRate", 0)),
+                "breathRate": float(datos.get("breathRate", 0)),
+                "soundLevel": float(datos.get("soundLevel", 0)),
+                "snoreDetected": bool(datos.get("snoreDetected", False)),
+                "createdAt": firestore.SERVER_TIMESTAMP
+            }
+
+            ref = (
+                self.db.collection("users").document(uid)
+                       .collection("sleepHistory").document(session_id)
+                       .collection("samples")
+            )
+
+            ref.add(sample_data)
+
+            logger.info(
+                f"✓ Muestra guardada: users/{uid}/sleepHistory/{session_id}/samples"
+            )
+
+            return True
+
+        except Exception as e:
+            logger.error(f"Error guardando muestra uid={uid}: {e}")
+            return False
 
     def guardar_sesion_nocturna(self, uid: str, resumen: dict, prediccion: dict):
         try:
