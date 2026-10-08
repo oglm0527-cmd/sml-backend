@@ -39,7 +39,6 @@ def health():
         "service":      "SML Backend",
         "modelVersion": ml_service.version,
         "modelLoaded":  ml_service.cargado,
-        "mqttHost":     os.getenv("HIVEMQ_HOST", "no configurado"),
         "timestamp":    datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     }), 200
 
