@@ -9,7 +9,7 @@ backend, cloud services, machine learning and a web application.
 
 ## System Architecture
 
-![SML System Architecture](docs/architecture.png)
+![SML System Architecture](docs/Figura1_Arquitectura.png)
 
 ## Backend Features
 
